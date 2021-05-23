@@ -9,18 +9,30 @@ namespace ecc {
 	
 	namespace testing {
 
-		void RiddleTreePrintInOrderTest::initializeRiddleTreeTestClassWithThreeNodes() {
+		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithThreeNodes() {
 			TreeNode* nodeA(new TreeNode());
 			nodeA->insertData("A");
 			TreeNode* nodeC(new TreeNode());
 			nodeC->insertData("C");
-			treeWithThreeNodes = new TreeNode();
-			treeWithThreeNodes->insertNodePointer(nodeA);
-			treeWithThreeNodes->insertData("B");
-			treeWithThreeNodes->insertNodePointer(nodeC);
+			root()->insertNodePointer(nodeA);
+			root()->insertData("B");
+			root()->insertNodePointer(nodeC);
 		}
 
-		void RiddleTreePrintInOrderTest::initializeRiddleTreeTestClassWithFourNodes() {
+		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithThreeNodesWithhRootNodeB) {
+
+			/*Arrange*/
+			tree_fixture->initializeRiddleTreeTestClassWithThreeNodes();
+			
+			/*  ACT  */
+			vector<string> nodesInOrder =
+				tree_fixture->traverseInOrder();
+
+			/*  ASSERT  */
+			EXPECT_EQ("A, B, C", toString(nodesInOrder));
+		}
+
+		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithFourNodes() {
 			TreeNode* nodeAB(new TreeNode());
 			nodeAB->insertData("A");
 			nodeAB->insertData("B");
@@ -30,41 +42,61 @@ namespace ecc {
 			TreeNode* nodeGH(new TreeNode());
 			nodeGH->insertData("G");
 			nodeGH->insertData("H");
-			treeWithFourNodes = new TreeNode();
-			treeWithFourNodes->insertNodePointer(nodeAB);
-			treeWithFourNodes->insertData("C");
-			treeWithFourNodes->insertNodePointer(nodeDE);
-			treeWithFourNodes->insertData("F");
-			treeWithFourNodes->insertNodePointer(nodeGH);
-		}
-
-		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithThreeNodesWithhRootNodeB) {
-
-			/*Arrange*/
-			initializeRiddleTreeTestClassWithThreeNodes();
-			
-			/*  ACT  */
-			vector<string> nodesInOrder =
-				tree_fixture->traverseInOrder(treeWithThreeNodes);
-
-			/*  ASSERT  */
-			EXPECT_EQ("A, B, C", toString(nodesInOrder));
+			root()->insertNodePointer(nodeAB);
+			root()->insertData("C");
+			root()->insertNodePointer(nodeDE);
+			root()->insertData("F");
+			root()->insertNodePointer(nodeGH);
 		}
 
 		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithFourNodesWithhRootNodeCF) {
-
+			
 			/*Arrange*/
-			initializeRiddleTreeTestClassWithFourNodes();
-
+			tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
 
 			/*  ACT  */
 			vector<string> nodesInOrder =
-				tree_fixture->traverseInOrder(treeWithFourNodes);
+				tree_fixture->traverseInOrder();
 
 			/*  ASSERT  */
 			EXPECT_EQ("A, B, C, D, E, F, G, H", toString(nodesInOrder));
 		}
 
+
+		void RiddleTreeTestClass::initializeTreeWithRootHasAValue() {
+			root()->insertData("A");
+		}
+
+		TEST_F(RiddleTreeInsertTest, InsertNode_B_Into_TreeWith_RootHas_A) {
+
+			/*Arrange*/
+			tree_fixture->initializeTreeWithRootHasAValue();
+
+			/*  ACT  */
+			tree_fixture->insert("B");
+
+			/*  ASSERT  */
+			EXPECT_EQ("A, B", toString(tree_fixture->traverseInOrder()));
+		
+		}
+
+
+		void RiddleTreeTestClass::initializeTreeWithOneNodeAndValuesAB() {
+		
+		}
+
+		TEST_F(RiddleTreeInsertTest, INSERT) {
+
+			/*Arrange*/
+			tree_fixture->initializeTreeWithOneNodeAndValuesAB();
+
+			/*  ACT  */
+			tree_fixture->insert("B");
+
+			/*  ASSERT  */
+			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
+
+		}
 	}
 
 }

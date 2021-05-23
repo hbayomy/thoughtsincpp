@@ -16,6 +16,21 @@ namespace ecc {
 
 	namespace testing {
 
+		/************************************************************/
+		/*   Riddle Tree Test Class									*/
+		/************************************************************/
+		class RiddleTreeTestClass : public RiddleTree {
+		public:
+			RiddleTreeTestClass() : RiddleTree() {}
+			void initializeRiddleTreeTestClassWithThreeNodes();
+			void initializeRiddleTreeTestClassWithFourNodes();
+			void initializeTreeWithRootHasAValue();
+			void initializeTreeWithOneNodeAndValuesAB();
+		};
+
+		/************************************************************/
+		/*   Base Test Case Class									*/
+		/************************************************************/
 		class BaseTest : public ::testing::Test {
 
 		public:
@@ -36,22 +51,19 @@ namespace ecc {
 		class RiddleTreePrintInOrderTest : public BaseTest {
 
 		protected:
-			TreeNode* treeWithThreeNodes;
-			TreeNode* treeWithFourNodes;
-			RiddleTree* tree_fixture;
-
-			void initializeRiddleTreeTestClassWithThreeNodes();
-			void initializeRiddleTreeTestClassWithFourNodes();
+			RiddleTreeTestClass* tree_fixture;
 
 			void SetUp() override {
-				tree_fixture = new RiddleTree();
+				tree_fixture = new RiddleTreeTestClass();
+			}
+
+			void TearDown() override {
+				delete tree_fixture;
 			}
 
 		public:
 			RiddleTreePrintInOrderTest() : BaseTest() {
-				treeWithThreeNodes = nullptr;
-				treeWithFourNodes = nullptr;
-				tree_fixture = nullptr;
+				tree_fixture = NULL;
 			}
 		};
 
@@ -61,18 +73,20 @@ namespace ecc {
 		class RiddleTreeInsertTest : public BaseTest {
 			
 		protected:
-			RiddleTree tree; 
-			
+			RiddleTreeTestClass* tree_fixture;
+
 			void SetUp() override {
-				//TODO
+				tree_fixture = new RiddleTreeTestClass();
 			}
 
-			void TearDown() override{
-				//TODO
+			void TearDown() override {
+				delete tree_fixture;
 			}
 
 		public:
-			RiddleTreeInsertTest() : BaseTest() {}
+			RiddleTreeInsertTest() : BaseTest() {
+				tree_fixture = NULL;
+			}
 		};
 	}
 }

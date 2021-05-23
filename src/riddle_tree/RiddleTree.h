@@ -31,17 +31,22 @@ namespace ecc {
 		string nodeData;
 
 	public:
-		NodeField(FieldType type) { 
+		NodeField(FieldType type, TreeNode* node) { 
 			fieldType = type;
-			childNode = nullptr;
+			childNode = node;
 			nodeData = string();
 		}
-		FieldType type() { return fieldType; }
-		
-		NodeField& node(TreeNode* treeNode) { childNode = treeNode; return (*this); }
-		TreeNode* node() { return childNode; }
 
-		NodeField& data(string data) { nodeData = data; return (*this); }
+		NodeField(FieldType type, string data) {
+			fieldType = type;
+			childNode = NULL;
+			nodeData = data;
+		}
+
+		~NodeField() { if (childNode != NULL) delete childNode; }
+
+		FieldType type() { return fieldType; }		
+		TreeNode* node() { return childNode; }
 		string data() { return nodeData; }
 
 	};
@@ -51,12 +56,17 @@ namespace ecc {
 	/******************************************************/
 	class TreeNode {
 	private:
-		vector<NodeField> tuple;
+		const short MAX_NO_OF_VALUES = 2;
+		
+		vector<NodeField*>* tuple;
 
 	public:
+		TreeNode() {
+			tuple = new vector<NodeField*>();
+		}
 
-		vector<NodeField>& nodeAsVector() { 
-			return tuple;
+		vector<NodeField*>& nodeAsVector() { 
+			return *tuple;
 		}
 
 		TreeNode& insertNodePointer(TreeNode* nodePointer);
@@ -69,33 +79,39 @@ namespace ecc {
 	/******************************************************/
 	class RiddleTree {
 	private:
+		TreeNode* treeRoot;
+
 		void visitNode(TreeNode* node, vector<string>* visitedNodes) {
-			for (NodeField field : node->nodeAsVector()) {
+			for (NodeField* field : node->nodeAsVector()) {
 				pushNode(field, visitedNodes);
 				pushData(field, visitedNodes);
 			}			
 		}
 
-		void pushNode(ecc::NodeField& field, std::vector<string>* visitedNodes)
+		void pushNode(ecc::NodeField* field, std::vector<string>* visitedNodes)
 		{
-			if (field.type() == FieldType::POINTER) {
-				visitNode(field.node(), visitedNodes);
+			if (field->type() == FieldType::POINTER) {
+				visitNode(field->node(), visitedNodes);
 			}
 		}
 
-		void pushData(ecc::NodeField& field, std::vector<std::string>* visitedNodes)
+		void pushData(ecc::NodeField* field, std::vector<std::string>* visitedNodes)
 		{
-			if (field.type() == FieldType::DATA) {
-				visitedNodes->push_back(field.data());
+			if (field->type() == FieldType::DATA) {
+				visitedNodes->push_back(field->data());
 			}
 		}
+
+	protected:
+		TreeNode* root() { return treeRoot; }		
 
 	public:
-		RiddleTree() { }
+		RiddleTree() { treeRoot = new TreeNode(); }
+		~RiddleTree() { delete treeRoot; }
 
-		void insert(shared_ptr<TreeNode> treeRoot, string data);
+		void insert(string data);
 
-		vector<string>& traverseInOrder(TreeNode* treeRoot);
+		vector<string>& traverseInOrder();
 	};
 
 }

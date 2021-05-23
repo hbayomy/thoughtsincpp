@@ -13,3 +13,8 @@ _deps
 /.vs/
 /build/
 /.idea/
+conan.lock
+conaninfo.txt
+conanbuildinfo.txt
+conanbuildinfo.cmake
+graph_info.json

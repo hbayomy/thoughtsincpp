@@ -11,18 +11,16 @@ namespace ecc {
 
 	TreeNode& TreeNode::insertNodePointer(TreeNode* nodePointer)
 	{
-		tuple.push_back(
-			NodeField(FieldType::POINTER)
-			.node(nodePointer)
+		tuple->push_back(
+			new NodeField(FieldType::POINTER, nodePointer)
 		);
 		return (*this);
 	}
 
 	TreeNode& TreeNode::insertData(string data)
 	{
-		tuple.push_back(
-			NodeField(FieldType::DATA)
-			.data(data)
+		tuple->push_back(
+			new NodeField(FieldType::DATA, data)
 		);
 		return (*this);
 	}
@@ -31,15 +29,15 @@ namespace ecc {
 	/******************************************************/
 	/*				Riddle Tree Class					  */
 	/******************************************************/
-	void RiddleTree::insert(shared_ptr<TreeNode> treeRoot, string data)
+	void RiddleTree::insert(string data)
 	{
 		//TODO 
 	}
 
-	vector<string>& RiddleTree::traverseInOrder(TreeNode* treeRoot)
+	vector<string>& RiddleTree::traverseInOrder()
 	{
 		vector<string>* nodes = new vector<string>();
-		visitNode(treeRoot, nodes);
+		visitNode(root(), nodes);
 		return *nodes;
 	}
 
