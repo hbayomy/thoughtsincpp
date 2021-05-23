@@ -1,0 +1,50 @@
+[settings]
+    arch=x86_64
+    build_type=Debug
+    compiler=Visual Studio
+    compiler.runtime=MDd
+    compiler.version=16
+    os=Windows
+
+[requires]
+    gtest/1.Y.Z
+    spdlog/1.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    arch_build=x86_64
+    build_type=Debug
+    compiler=Visual Studio
+    compiler.runtime=MDd
+    compiler.version=16
+    os=Windows
+    os_build=Windows
+
+[full_requires]
+    fmt/7.1.3:d057732059ea44a47760900cb5e4855d2bea8714
+    gtest/1.10.0:875c67f4d8a79bdd002908b75efce119eb82836d
+    spdlog/1.8.5:55db45024bed1a2d40f24c02c050b7ca72eeccf4
+
+[full_options]
+    fmt:header_only=False
+    fmt:shared=False
+    fmt:with_fmt_alias=False
+    gtest:build_gmock=True
+    gtest:debug_postfix=d
+    gtest:hide_symbols=False
+    gtest:no_main=False
+    gtest:shared=False
+    spdlog:header_only=False
+    spdlog:no_exceptions=False
+    spdlog:shared=False
+    spdlog:wchar_filenames=False
+    spdlog:wchar_support=False
+
+[recipe_hash]
+
+
+[env]
+

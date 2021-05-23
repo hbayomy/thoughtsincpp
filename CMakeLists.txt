@@ -7,6 +7,9 @@ project ("ThoughtsInCPP")
 
 set(CMAKE_CXX_STANDARD 14)
 
+include(./conanbuildinfo.cmake)
+conan_basic_setup()
+
 # Include sub-projects.
 add_subdirectory ("src")
 add_subdirectory ("test")

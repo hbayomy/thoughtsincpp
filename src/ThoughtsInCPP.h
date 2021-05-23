@@ -1,8 +1,7 @@
-﻿// ThoughtsInCPP.h : Include file for standard system include files,
-// or project specific include files.
-
-#pragma once
+﻿#ifndef _THOUGTS_IN_CPP_
+#define _THOUGTS_IN_CPP_
 
 #include <iostream>
+#include "riddle_tree/RiddleTree.h"
 
-// TODO: Reference additional headers your program requires here.
+#endif _THOUGTS_IN_CPP_
