@@ -15,39 +15,28 @@ using namespace std;
 /******************************************************/
 namespace ecc {
 	/******************************************************/
-	/*				Types' Declarations					  */
+	/*				Forward Declarations				  */
 	/******************************************************/
 	class TreeNode;
-	enum class FieldType  { DATA, POINTER };
-	enum class NodeLevel { ROOT, LEAF, MIDDLE };
 
 	/******************************************************/
 	/*				Node Field Class					  */
 	/******************************************************/
 	class NodeField {
 	private:
-		FieldType fieldType;
 		TreeNode* childNode;
-		string nodeData;
+		string nodeKey;
 
 	public:
-		NodeField(FieldType type, TreeNode* node) { 
-			fieldType = type;
+		NodeField(string theKey, TreeNode* node) { 
 			childNode = node;
-			nodeData = string();
-		}
-
-		NodeField(FieldType type, string data) {
-			fieldType = type;
-			childNode = NULL;
-			nodeData = data;
+			nodeKey = theKey;
 		}
 
 		~NodeField() { if (childNode != NULL) delete childNode; }
 
-		FieldType type() { return fieldType; }		
 		TreeNode* node() { return childNode; }
-		string data() { return nodeData; }
+		string key() { return nodeKey; }
 
 	};
 
@@ -69,8 +58,11 @@ namespace ecc {
 			return *tuple;
 		}
 
-		TreeNode& insertNodePointer(TreeNode* nodePointer);
-		TreeNode& insertData(string data);
+		void insert(string theKey, TreeNode* nodePointer) {
+			tuple->push_back(
+				new NodeField(theKey, nodePointer)
+			);
+		}
 	
 	};
 
@@ -82,23 +74,11 @@ namespace ecc {
 		TreeNode* treeRoot;
 
 		void visitNode(TreeNode* node, vector<string>* visitedNodes) {
-			for (NodeField* field : node->nodeAsVector()) {
-				pushNode(field, visitedNodes);
-				pushData(field, visitedNodes);
-			}			
-		}
-
-		void pushNode(ecc::NodeField* field, std::vector<string>* visitedNodes)
-		{
-			if (field->type() == FieldType::POINTER) {
-				visitNode(field->node(), visitedNodes);
-			}
-		}
-
-		void pushData(ecc::NodeField* field, std::vector<std::string>* visitedNodes)
-		{
-			if (field->type() == FieldType::DATA) {
-				visitedNodes->push_back(field->data());
+			if (node != NULL) {
+				for (NodeField* field : node->nodeAsVector()) {
+					visitNode(field->node(), visitedNodes);
+					visitedNodes->push_back(field->key());
+				}			
 			}
 		}
 

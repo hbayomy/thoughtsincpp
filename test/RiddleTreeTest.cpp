@@ -10,16 +10,17 @@ namespace ecc {
 	namespace testing {
 
 		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithThreeNodes() {
-			TreeNode* nodeA(new TreeNode());
-			nodeA->insertData("A");
-			TreeNode* nodeC(new TreeNode());
-			nodeC->insertData("C");
-			root()->insertNodePointer(nodeA);
-			root()->insertData("B");
-			root()->insertNodePointer(nodeC);
+			TreeNode* nodeAB(new TreeNode());
+			nodeAB->insert("A",NULL);
+			nodeAB->insert("B",NULL);
+			TreeNode* nodeD(new TreeNode());
+			nodeD->insert("D",NULL);
+			root()->insert("C",nodeAB);
+			root()->insert("E", nodeD);
+			
 		}
 
-		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithThreeNodesWithhRootNodeB) {
+		TEST_F(RiddleTreePrintInOrderTest, PrintTree_WithThreeNodes_WithhRootNodeB) {
 
 			/*Arrange*/
 			tree_fixture->initializeRiddleTreeTestClassWithThreeNodes();
@@ -29,24 +30,22 @@ namespace ecc {
 				tree_fixture->traverseInOrder();
 
 			/*  ASSERT  */
-			EXPECT_EQ("A, B, C", toString(nodesInOrder));
+			EXPECT_EQ("A, B, C, D, E", toString(nodesInOrder));
 		}
 
 		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithFourNodes() {
 			TreeNode* nodeAB(new TreeNode());
-			nodeAB->insertData("A");
-			nodeAB->insertData("B");
-			TreeNode* nodeDE(new TreeNode());
-			nodeDE->insertData("D");
-			nodeDE->insertData("E");
-			TreeNode* nodeGH(new TreeNode());
-			nodeGH->insertData("G");
-			nodeGH->insertData("H");
-			root()->insertNodePointer(nodeAB);
-			root()->insertData("C");
-			root()->insertNodePointer(nodeDE);
-			root()->insertData("F");
-			root()->insertNodePointer(nodeGH);
+			nodeAB->insert("A",NULL);
+			nodeAB->insert("B",NULL);
+			TreeNode* nodeEF(new TreeNode());
+			nodeEF->insert("E", NULL);
+			nodeEF->insert("F", NULL);
+			TreeNode* nodeC(new TreeNode());
+			nodeC->insert("C",nodeAB);
+			TreeNode* nodeG(new TreeNode());
+			nodeG->insert("G", nodeEF);
+			root()->insert("D", nodeC);
+			root()->insert("H", nodeG);
 		}
 
 		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithFourNodesWithhRootNodeCF) {
@@ -64,10 +63,10 @@ namespace ecc {
 
 
 		void RiddleTreeTestClass::initializeTreeWithRootHasAValue() {
-			root()->insertData("A");
+			root()->insert("A",NULL);
 		}
 
-		TEST_F(RiddleTreeInsertTest, InsertNode_B_Into_TreeWith_RootHas_A) {
+		TEST_F(RiddleTreeInsertTest, Insert_Value_B_IntoTreeWith_RootHasValue_A) {
 
 			/*Arrange*/
 			tree_fixture->initializeTreeWithRootHasAValue();
@@ -82,16 +81,17 @@ namespace ecc {
 
 
 		void RiddleTreeTestClass::initializeTreeWithOneNodeAndValuesAB() {
-		
+			root()->insert("A",NULL);
+			root()->insert("B",NULL);
 		}
 
-		TEST_F(RiddleTreeInsertTest, INSERT) {
+		TEST_F(RiddleTreeInsertTest, Insert_Value_C_InTreeWith_RootHasValues_A_and_B) {
 
 			/*Arrange*/
 			tree_fixture->initializeTreeWithOneNodeAndValuesAB();
 
 			/*  ACT  */
-			tree_fixture->insert("B");
+			tree_fixture->insert("C");
 
 			/*  ASSERT  */
 			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
