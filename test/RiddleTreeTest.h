@@ -91,4 +91,4 @@ namespace ecc {
 	}
 }
 
-#endif _RIDDLE_TREE_TEST_
+#endif //_RIDDLE_TREE_TEST_

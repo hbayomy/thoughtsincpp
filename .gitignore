@@ -13,6 +13,8 @@ _deps
 /.vs/
 /build/
 /.idea/
+/cmake-build-debug/
+/build/
 conan.lock
 conaninfo.txt
 conanbuildinfo.txt
