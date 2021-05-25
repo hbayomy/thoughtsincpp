@@ -91,9 +91,11 @@ namespace ecc {
 			tree_fixture->initializeTreeWithOneNodeAndValuesAB();
 
 			/*  ACT  */
+			/*  The root node should be split */
 			tree_fixture->insert("C");
 
 			/*  ASSERT  */
+			/*  The Tree will have three nodes including its root */
 			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
 
 		}
