@@ -12,10 +12,12 @@ conan_basic_setup()
 
 enable_testing()
 
+include(GoogleTest)
+
 add_library (riddle_tree STATIC "src/riddle_tree/RiddleTree.cpp" "src/riddle_tree/RiddleTree.h")
 target_link_libraries (riddle_tree ${CONAN_LIBS})
 
 add_executable (RiddleTreeTest "test/RiddleTreeTest.cpp" "test/RiddleTreeTest.h")
 target_link_libraries(RiddleTreeTest riddle_tree ${CONAN_LIBS_GTEST})
 
-add_test(NAME RiddleTreeTest WORKING_DIRECTORY bin COMMAND RiddleTreeTest)
+add_test(RiddleTreeTest bin/RiddleTreeTest)
