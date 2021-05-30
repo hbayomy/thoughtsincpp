@@ -46,31 +46,32 @@ namespace ecc {
 		};
 
 		/************************************************************/
-		/*   Test Cases Class for In Order Traverse to Print Tree   */
+		/*   Test Cases Class for TreeNode Functions                */
 		/************************************************************/
-		class RiddleTreePrintInOrderTest : public BaseTest {
+		class TreeNodeTests : public BaseTest {
 
 		protected:
-			RiddleTreeTestClass* tree_fixture;
+			TreeNode<string>* treeNode_fixture;
 
 			void SetUp() override {
-				tree_fixture = new RiddleTreeTestClass();
+				treeNode_fixture = new TreeNode<string>();
 			}
 
 			void TearDown() override {
-				delete tree_fixture;
+				delete treeNode_fixture;
+                treeNode_fixture = NULL;
 			}
 
 		public:
-			RiddleTreePrintInOrderTest() : BaseTest() {
-				tree_fixture = NULL;
+            TreeNodeTests() : BaseTest() {
+				treeNode_fixture = NULL;
 			}
 		};
 
 		/******************************************************/
-		/*   Test Cases Class for Insert method               */
+		/*   Test Cases Class for RiddleTree Functions        */
 		/******************************************************/
-		class RiddleTreeInsertTest : public BaseTest {
+		class RiddleTreeTests : public BaseTest {
 			
 		protected:
 			RiddleTreeTestClass* tree_fixture;
@@ -81,10 +82,11 @@ namespace ecc {
 
 			void TearDown() override {
 				delete tree_fixture;
+                tree_fixture = NULL;
 			}
 
 		public:
-			RiddleTreeInsertTest() : BaseTest() {
+            RiddleTreeTests() : BaseTest() {
 				tree_fixture = NULL;
 			}
 		};

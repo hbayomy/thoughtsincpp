@@ -8,9 +8,11 @@ namespace ecc {
 	/******************************************************/
 	/*				Riddle Tree Class					  */
 	/******************************************************/
-	void RiddleTree::insert(string data)
+	void RiddleTree::insert(string key)
 	{
-		//TODO 
+		if( (root()->numberOfInsertedKeys()+1) <= root()->maxNumberOfAllowedKeys()){
+		    root()->insert(key,NULL);
+		}
 	}
 
 	vector<string>& RiddleTree::traverseInOrder()

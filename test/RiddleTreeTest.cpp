@@ -9,18 +9,120 @@ namespace ecc {
 	
 	namespace testing {
 
+        /************************************************************/
+        /*   Test Cases Class for TreeNode Functions                */
+        /************************************************************/
+
+        TEST_F(TreeNodeTests, TreeNode_InsertKey_EmptyNode_Successfully){
+            /* No Arrange */
+
+            /* Act */
+            treeNode_fixture->insert("B",NULL);
+
+            /* ASSERT */
+            EXPECT_EQ(1,treeNode_fixture->numberOfInsertedKeys());
+        }
+
+        TEST_F(TreeNodeTests, TreeNode_InsertKey_NodeWithOneKey_Successfully){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+
+            /* Act */
+            treeNode_fixture->insert("B",NULL);
+
+            /* ASSERT */
+            EXPECT_EQ(2,treeNode_fixture->numberOfInsertedKeys());
+        }
+
+        TEST_F(TreeNodeTests, TreeNode_InsertKey_ChaneDefaultMaxNumberOfKeys_Successfully){
+            /* Arrange */
+            treeNode_fixture = new TreeNode<string>(3);
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            treeNode_fixture->insert("C",NULL);
+
+            /* ASSERT */
+            EXPECT_EQ(3,treeNode_fixture->numberOfInsertedKeys());
+        }
+
+	    TEST_F(TreeNodeTests, TreeNode_InsertKey_ExceedNumberOfMaxKeys){
+	        /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+	        /* ASSERT */                    /* Act */
+            EXPECT_ANY_THROW(treeNode_fixture->insert("C",NULL));
+	    }
+
+        TEST_F(TreeNodeTests, Find_MaxKeyIndex_InTreeNode){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            int max_keyIndex = treeNode_fixture->maxKeyIndex();
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(1,max_keyIndex);
+        }
+
+        TEST_F(TreeNodeTests, Find_MaxKey_InTreeNode){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            string max_key = treeNode_fixture->maxKey();
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(string("B"),max_key);
+        }
+
+        TEST_F(TreeNodeTests, TreeNode_RemoveKey_Successfully){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            bool removed = treeNode_fixture->remove("A");
+
+            /* ASSERT */
+            EXPECT_EQ(1,treeNode_fixture->numberOfInsertedKeys());
+            EXPECT_EQ(true, removed);
+        }
+
+        TEST_F(TreeNodeTests, TreeNode_RemoveKey_DoesNotExist){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            bool removed = treeNode_fixture->remove("C");
+
+            /* ASSERT */
+            EXPECT_EQ(2,treeNode_fixture->numberOfInsertedKeys());
+            EXPECT_EQ(false, removed);
+        }
+
+
+        /******************************************************/
+        /*   Test Cases Class for RiddleTree Functions        */
+        /******************************************************/
+
 		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithThreeNodes() {
-			TreeNode* nodeAB(new TreeNode());
+			TreeNode<string>* nodeAB(new TreeNode<string>());
 			nodeAB->insert("A",NULL);
 			nodeAB->insert("B",NULL);
-			TreeNode* nodeD(new TreeNode());
+			TreeNode<string>* nodeD(new TreeNode<string>());
 			nodeD->insert("D",NULL);
 			root()->insert("C",nodeAB);
 			root()->insert("E", nodeD);
 			
 		}
 
-		TEST_F(RiddleTreePrintInOrderTest, PrintTree_WithThreeNodes_WithhRootNodeB) {
+		TEST_F(RiddleTreeTests, PrintTree_WithThreeNodes_WithhRootNodeB) {
 
 			/*Arrange*/
 			tree_fixture->initializeRiddleTreeTestClassWithThreeNodes();
@@ -34,21 +136,21 @@ namespace ecc {
 		}
 
 		void RiddleTreeTestClass::initializeRiddleTreeTestClassWithFourNodes() {
-			TreeNode* nodeAB(new TreeNode());
+			TreeNode<string>* nodeAB(new TreeNode<string>());
 			nodeAB->insert("A",NULL);
 			nodeAB->insert("B",NULL);
-			TreeNode* nodeEF(new TreeNode());
+			TreeNode<string>* nodeEF(new TreeNode<string>());
 			nodeEF->insert("E", NULL);
 			nodeEF->insert("F", NULL);
-			TreeNode* nodeC(new TreeNode());
+			TreeNode<string>* nodeC(new TreeNode<string>());
 			nodeC->insert("C",nodeAB);
-			TreeNode* nodeG(new TreeNode());
+			TreeNode<string>* nodeG(new TreeNode<string>());
 			nodeG->insert("G", nodeEF);
 			root()->insert("D", nodeC);
 			root()->insert("H", nodeG);
 		}
 
-		TEST_F(RiddleTreePrintInOrderTest, PrintTreeWithFourNodesWithhRootNodeCF) {
+		TEST_F(RiddleTreeTests, PrintTreeWithFourNodesWithhRootNodeCF) {
 			
 			/*Arrange*/
 			tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
@@ -66,7 +168,7 @@ namespace ecc {
 			root()->insert("A",NULL);
 		}
 
-		TEST_F(RiddleTreeInsertTest, Insert_Value_B_IntoTreeWith_RootHasValue_A) {
+		TEST_F(RiddleTreeTests, Insert_Value_B_IntoTreeWith_RootHasValue_A) {
 
 			/*Arrange*/
 			tree_fixture->initializeTreeWithRootHasAValue();
@@ -85,7 +187,7 @@ namespace ecc {
 			root()->insert("B",NULL);
 		}
 
-		TEST_F(RiddleTreeInsertTest, Insert_Value_C_InTreeWith_RootHasValues_A_and_B) {
+		TEST_F(RiddleTreeTests, Insert_Value_C_IntoFullRootHasValues_A_and_B_TheRootMustSplit) {
 
 			/*Arrange*/
 			tree_fixture->initializeTreeWithOneNodeAndValuesAB();
@@ -95,7 +197,7 @@ namespace ecc {
 			tree_fixture->insert("C");
 
 			/*  ASSERT  */
-			/*  The Tree will have three nodes including its root */
+			/*  The Tree will have three fields including its root */
 			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
 
 		}
