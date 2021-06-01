@@ -56,6 +56,54 @@ namespace ecc {
             EXPECT_ANY_THROW(treeNode_fixture->insert("C",NULL));
 	    }
 
+        TEST_F(TreeNodeTests, Find_Key_InTreeNode){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            bool found = treeNode_fixture->hasKey("B");
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(true,found);
+        }
+
+        TEST_F(TreeNodeTests, Find_Key_InTreeNode_ForMissingValue){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            bool found = treeNode_fixture->hasKey("C");
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(false,found);
+        }
+
+        TEST_F(TreeNodeTests, Find_KeyIndex_InTreeNode){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            int keyIndex = treeNode_fixture->indexOfKey("B");
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(1,keyIndex);
+        }
+
+        TEST_F(TreeNodeTests, Find_KeyIndex_InTreeNode_ForMissingValue){
+            /* Arrange */
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+
+            /* Act */
+            int keyIndex = treeNode_fixture->indexOfKey("C");
+
+            /* ASSERT */                    /* Act */
+            EXPECT_EQ(-1,keyIndex);
+        }
+
         TEST_F(TreeNodeTests, Find_MaxKeyIndex_InTreeNode){
             /* Arrange */
             treeNode_fixture->insert("A",NULL);
@@ -152,7 +200,7 @@ namespace ecc {
 
 		TEST_F(RiddleTreeTests, PrintTreeWithFourNodesWithhRootNodeCF) {
 			
-			/*Arrange*/
+			/* Arrange */
 			tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
 
 			/*  ACT  */
@@ -163,6 +211,27 @@ namespace ecc {
 			EXPECT_EQ("A, B, C, D, E, F, G, H", toString(nodesInOrder));
 		}
 
+        TEST_F(RiddleTreeTests, Search_ForExisting_Node_WithValue_F){
+            /* Arrange */
+            tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
+
+            /*  ACT  */
+            bool found = tree_fixture->search("A");
+
+            /*  ASSERT  */
+            EXPECT_EQ(true,found);
+		}
+
+        TEST_F(RiddleTreeTests, Search_ForMissing_Node_WithValue_X){
+            /* Arrange */
+            tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
+
+            /*  ACT  */
+            bool found = tree_fixture->search("X");
+
+            /*  ASSERT  */
+            EXPECT_EQ(false,found);
+        }
 
 		void RiddleTreeTestClass::initializeTreeWithRootHasAValue() {
 			root()->insert("A",NULL);
@@ -170,7 +239,7 @@ namespace ecc {
 
 		TEST_F(RiddleTreeTests, Insert_Value_B_IntoTreeWith_RootHasValue_A) {
 
-			/*Arrange*/
+			/* Arrange */
 			tree_fixture->initializeTreeWithRootHasAValue();
 
 			/*  ACT  */
@@ -187,9 +256,9 @@ namespace ecc {
 			root()->insert("B",NULL);
 		}
 
-		TEST_F(RiddleTreeTests, Insert_Value_C_IntoFullRootHasValues_A_and_B_TheRootMustSplit) {
+        TEST_F(RiddleTreeTests, Insert_Value_C_IntoFullRootHasValues_A_and_B_TheRootMustSplit) {
 
-			/*Arrange*/
+			/* Arrange */
 			tree_fixture->initializeTreeWithOneNodeAndValuesAB();
 
 			/*  ACT  */
@@ -197,7 +266,7 @@ namespace ecc {
 			tree_fixture->insert("C");
 
 			/*  ASSERT  */
-			/*  The Tree will have three fields including its root */
+			/*  The Tree will have three nodes including its root */
 			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
 
 		}

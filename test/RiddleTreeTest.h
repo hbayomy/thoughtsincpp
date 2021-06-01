@@ -26,7 +26,7 @@ namespace ecc {
 			void initializeRiddleTreeTestClassWithFourNodes();
 			void initializeTreeWithRootHasAValue();
 			void initializeTreeWithOneNodeAndValuesAB();
-		};
+        };
 
 		/************************************************************/
 		/*   Base Test Case Class									*/

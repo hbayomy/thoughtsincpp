@@ -5,10 +5,11 @@
 #include <cmath>
 #include <string>
 #include <memory>
-#include<iterator>
+#include <iterator>
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <functional>
 
 using namespace std;
 
@@ -72,6 +73,13 @@ namespace ecc {
 	/******************************************************/
 	/*				Tree Node Class						  */
 	/******************************************************/
+    template<typename TreeNodeFieldType>
+    class TreeNodeVisitor {
+    public:
+        virtual void visit(TreeNodeFieldType field) = 0;
+        virtual bool endTreeVisit() = 0;
+    };
+
 	template<typename Key>
 	class TreeNode {
 	private:
@@ -188,11 +196,18 @@ namespace ecc {
             }
             return merged;
 		}
+
+        int indexOfKey(string key) {
+		    int indexOfKey = findFieldIndexByKey(key);
+            return indexOfKey < tuple->size() ? indexOfKey : -1 ;
+        }
+
     };
 
 	/******************************************************/
 	/*				Riddle Tree Class					  */
 	/******************************************************/
+
 	class RiddleTree {
 	private:
         typedef TreeNode<string> StringTreeNode;
@@ -200,14 +215,8 @@ namespace ecc {
 
         TreeNode<string>* treeRoot;
 
-		void visitNode(TreeNode<string>* node, vector<string>* visitedNodes) {
-		    if(node!=NULL){
-                for (StringNodeField field : node->fields()) {
-                    visitNode(field.node(), visitedNodes);
-                    visitedNodes->push_back(field.key());
-                }
-		    }
-		}
+        void visitNode(TreeNode<string>* node,  TreeNodeVisitor<NodeField<string,TreeNode<string>*>*>* visitor);
+
 
 	protected:
         StringTreeNode* root() { return treeRoot; }
@@ -217,10 +226,54 @@ namespace ecc {
 		~RiddleTree() { delete treeRoot; }
 
 		void insert(string data);
-
+        bool search(string targetKey);
 		vector<string>& traverseInOrder();
 	};
 
+    class RiddleTreeNodeSearchVisitor : TreeNodeVisitor<NodeField<string,TreeNode<string>*>*> {
+    private:
+        string targetKey;
+        bool theKeyIsFound;
+
+    public:
+        RiddleTreeNodeSearchVisitor(string targetKey) {
+            this->targetKey = targetKey;
+            theKeyIsFound = false;
+        }
+
+        bool found(){ return theKeyIsFound; }
+
+        void visit(NodeField<string,TreeNode<string>*>* field){
+            if(!found())
+                theKeyIsFound = (targetKey == field->key());
+        }
+
+        bool endTreeVisit(){
+            return found();
+        }
+
+
+    };
+
+    class RiddleTreeNodeExtractKeyVisitor : TreeNodeVisitor<NodeField<string,TreeNode<string>*>*> {
+    private:
+        vector<string>* theTreeNodes;
+
+    public:
+        RiddleTreeNodeExtractKeyVisitor() {
+            theTreeNodes = new vector<string>();
+        }
+
+        void visit(NodeField<string,TreeNode<string>*>* field){
+            theTreeNodes->push_back(field->key());
+        }
+
+        bool endTreeVisit(){
+            return false;
+        }
+
+        vector<string>& treeNodes(){ return *theTreeNodes; }
+    };
 }
 
 #endif //_RIDDLE_TREE_
