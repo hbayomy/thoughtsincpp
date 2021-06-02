@@ -37,13 +37,14 @@ namespace ecc {
         TEST_F(TreeNodeTests, TreeNode_InsertKey_ChaneDefaultMaxNumberOfKeys_Successfully){
             /* Arrange */
             treeNode_fixture = new TreeNode<string>(3);
+            treeNode_fixture->insert("C",NULL);
             treeNode_fixture->insert("A",NULL);
-            treeNode_fixture->insert("B",NULL);
 
             /* Act */
-            treeNode_fixture->insert("C",NULL);
+            treeNode_fixture->insert("B",NULL);
 
             /* ASSERT */
+            EXPECT_EQ("A, B, C", toString(treeNode_fixture->keys()));
             EXPECT_EQ(3,treeNode_fixture->numberOfInsertedKeys());
         }
 
@@ -231,6 +232,16 @@ namespace ecc {
 
             /*  ASSERT  */
             EXPECT_EQ(false,found);
+        }
+
+        TEST_F(RiddleTreeTests, Insert_Value_B_AlreadyExist) {
+
+            /* Arrange */
+            tree_fixture->initializeRiddleTreeTestClassWithFourNodes();
+
+            /*  ASSERT  */                  /*  ACT  */
+            EXPECT_ANY_THROW(tree_fixture->insert("B"));
+
         }
 
 		void RiddleTreeTestClass::initializeTreeWithRootHasAValue() {

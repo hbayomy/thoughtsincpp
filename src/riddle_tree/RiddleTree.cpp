@@ -23,6 +23,7 @@ namespace ecc {
 
 	void RiddleTree::insert(string key)
 	{
+        if(search(key)) throw "The key "+ key +"is already exist";
 		if( (root()->numberOfInsertedKeys()+1) <= root()->maxNumberOfAllowedKeys()){
 		    root()->insert(key,NULL);
 		}

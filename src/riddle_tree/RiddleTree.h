@@ -91,7 +91,7 @@ namespace ecc {
 		vector<GenericNodeField>* tuple;
 
 		void assertThatNodeDoesNotExceedMaxNumberOfKeys(){
-		    if((tuple->size() + 1) > maxNumberOfAllowedKeys())
+		    if(fullNode())
 		        throw "Max Number of Keys is exceeded";
 		}
 
@@ -113,7 +113,15 @@ namespace ecc {
             return distance(nodeFields.begin(),found);
 		}
 
-	public:
+        int findInsertionIndex(GenericNodeField &newField) {
+		    int index = 0;
+            for(; index < numberOfInsertedKeys() ; index++){
+                if(newField.key() < tuple->at(index).key()) break;
+            }
+            return index;
+        }
+
+    public:
 		TreeNode() {
             maxNumOfKeys = MAX_NO_OF_KEYS;
 			tuple =  new vector<GenericNodeField>();
@@ -137,6 +145,14 @@ namespace ecc {
 
         ~TreeNode() { delete tuple; }
 
+        bool fullNode(){
+            return numberOfInsertedKeys() == maxNumberOfAllowedKeys();
+		}
+
+		bool emptyNode(){
+            return numberOfInsertedKeys() == 0;
+		}
+
         vector<GenericNodeField>& fields() {
             vector<GenericNodeField>* copy = new vector<GenericNodeField>(*tuple);
 			return *copy;
@@ -153,7 +169,9 @@ namespace ecc {
 		void insert(Key theKey, TreeNode<Key>* nodeAddress) {
 		    assertThatNodeDoesNotExceedMaxNumberOfKeys();
             NodeField<Key,TreeNode<Key>*>* newField = new NodeField<Key,TreeNode<Key>*>(theKey, nodeAddress);
-			tuple->push_back(*newField);
+            NodeFieldIterator it = tuple->begin();
+            int index = findInsertionIndex(*newField);
+            tuple->insert(tuple->begin()+index,*newField);
 		}
 
 		int numberOfInsertedKeys(){ return tuple->size(); }
@@ -186,7 +204,9 @@ namespace ecc {
 
 		bool split(TreeNode<Key>& newNode) {
             bool split = false;
+            if(numberOfInsertedKeys() == maxNumberOfAllowedKeys()){
 
+            }
 		}
 
 		bool merge(TreeNode<Key>& node) {
