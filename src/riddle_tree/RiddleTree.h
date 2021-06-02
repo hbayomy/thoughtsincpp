@@ -185,6 +185,8 @@ namespace ecc {
                     );
 		}
 
+        TreeNode<Key>* nodeOfMaxKey() { return tuple->at(maxKeyIndex()).node(); }
+
 		string maxKey(){
             return tuple->at(maxKeyIndex()).key();
 		}
@@ -239,21 +241,26 @@ namespace ecc {
         typedef NodeField<string, TreeNode<string>*> StringNodeField;
 
         TreeNode<string>* treeRoot;
+        int nodeCount;
 
-        void visitNode(TreeNode<string>* node,  function<bool(NodeField<string,TreeNode<string>*>*)> visit);
-
+        void visitNodeField(TreeNode<string>* node, function<bool(NodeField<string,TreeNode<string>*>*)> visit);
+        void visitNode(TreeNode<string>* node, function<void(TreeNode<string>*)> visit);
 
 	protected:
         StringTreeNode* root() { return treeRoot; }
-
+        void root(StringTreeNode* newRoot) { treeRoot = newRoot; }
+        void moveFieldOfMaxKey(TreeNode <string> *fromNode, TreeNode <string> *toNode);
 	public:
-		RiddleTree() {  treeRoot = new TreeNode<string>(); }
+		RiddleTree() {  treeRoot = new TreeNode<string>(); nodeCount = 1; }
 		~RiddleTree() { delete treeRoot; }
 
 		void insert(string data);
         bool search(string targetKey);
 		vector<string>& traverseInOrder();
-	};
+        int numberOfNodes() { return nodeCount; }
+        int treeDepth();
+
+    };
 
 }
 

@@ -24,7 +24,6 @@ namespace ecc {
 			RiddleTreeTestClass() : RiddleTree() {}
 			void initializeRiddleTreeTestClassWithThreeNodes();
 			void initializeRiddleTreeTestClassWithFourNodes();
-			void initializeTreeWithRootHasAValue();
 			void initializeTreeWithOneNodeAndValuesAB();
         };
 

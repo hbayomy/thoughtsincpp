@@ -288,20 +288,15 @@ namespace ecc {
 
         }
 
-		void RiddleTreeTestClass::initializeTreeWithRootHasAValue() {
-			root()->insert("A",NULL);
-		}
-
 		TEST_F(RiddleTreeTests, Insert_Value_B_IntoTreeWith_RootHasValue_A) {
 
-			/* Arrange */
-			tree_fixture->initializeTreeWithRootHasAValue();
+			/* No Arrange Empty Tree */
 
 			/*  ACT  */
 			tree_fixture->insert("B");
 
 			/*  ASSERT  */
-			EXPECT_EQ("A, B", toString(tree_fixture->traverseInOrder()));
+			EXPECT_EQ("B", toString(tree_fixture->traverseInOrder()));
 		
 		}
 
@@ -321,7 +316,9 @@ namespace ecc {
 			tree_fixture->insert("C");
 
 			/*  ASSERT  */
-			/*  The Tree will have three nodes including its root */
+			/*  The Tree will have two nodes including its root with depth 1 */
+            EXPECT_EQ(2, tree_fixture->numberOfNodes());
+            EXPECT_EQ( 1, tree_fixture->treeDepth());
 			EXPECT_EQ("A, B, C", toString(tree_fixture->traverseInOrder()));
 
 		}
