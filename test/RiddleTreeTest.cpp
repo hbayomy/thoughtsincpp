@@ -155,7 +155,33 @@ namespace ecc {
             EXPECT_EQ(false, removed);
         }
 
+        TEST_F(TreeNodeTests, TreeNode_Merge_Two_Nodes_ThatWillExceeds_MaxAllowedKeys){
+            /* Arrange */
+            treeNode_fixture->insert("C",NULL);
+            treeNode_fixture->insert("D",NULL);
+            TreeNode<string>* anotherNode = new TreeNode<string>();
+            anotherNode->insert("A",NULL);
+            anotherNode->insert("B",NULL);
 
+            /* ASSERT */                /* Act */
+            EXPECT_ANY_THROW(treeNode_fixture->merge(*anotherNode));
+        }
+
+        TEST_F(TreeNodeTests, TreeNode_Merge_Two_Nodes_Successfully){
+            /* Arrange */
+            treeNode_fixture = new TreeNode<string>(4);
+            treeNode_fixture->insert("C",NULL);
+            treeNode_fixture->insert("D",NULL);
+            TreeNode<string>* anotherNode = new TreeNode<string>(4);
+            anotherNode->insert("A",NULL);
+            anotherNode->insert("B",NULL);
+
+            /* Act */
+            treeNode_fixture->merge(*anotherNode);
+
+            /* ASSERT */
+            EXPECT_EQ("A, B, C, D", toString(treeNode_fixture->keys()));
+        }
         /******************************************************/
         /*   Test Cases Class for RiddleTree Functions        */
         /******************************************************/

@@ -205,16 +205,21 @@ namespace ecc {
 		bool split(TreeNode<Key>& newNode) {
             bool split = false;
             if(numberOfInsertedKeys() == maxNumberOfAllowedKeys()){
-
+                int offset = numberOfInsertedKeys() / 2;
+                newNode.tuple = split_hi(tuple->begin()+offset,tuple->end());
+                tuple->erase(tuple->begin()+offset,tuple->end());
+                split = true;
             }
+            return split;
 		}
 
-		bool merge(TreeNode<Key>& node) {
+		void merge(TreeNode<Key>& node) {
 		    bool merged = false;
-            if(node.numberOfInsertedKeys()+numberOfInsertedKeys() <= maxNumberOfAllowedKeys()){
-                tuple->insert(tuple->end(), node.fields().begin(), node.fields().end());
+            if(node.numberOfInsertedKeys()+numberOfInsertedKeys() > maxNumberOfAllowedKeys())
+                throw "Can't merge node because the merge will exceed the max number of keys allowed ";
+            for(GenericNodeField field: node.fields()){
+                insert(field.key(),field.node());
             }
-            return merged;
 		}
 
         int indexOfKey(string key) {
