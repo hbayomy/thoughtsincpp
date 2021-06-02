@@ -215,7 +215,7 @@ namespace ecc {
 
         TreeNode<string>* treeRoot;
 
-        void visitNode(TreeNode<string>* node,  TreeNodeVisitor<NodeField<string,TreeNode<string>*>*>* visitor);
+        void visitNode(TreeNode<string>* node,  function<bool(NodeField<string,TreeNode<string>*>*)> visit);
 
 
 	protected:
@@ -230,50 +230,6 @@ namespace ecc {
 		vector<string>& traverseInOrder();
 	};
 
-    class RiddleTreeNodeSearchVisitor : TreeNodeVisitor<NodeField<string,TreeNode<string>*>*> {
-    private:
-        string targetKey;
-        bool theKeyIsFound;
-
-    public:
-        RiddleTreeNodeSearchVisitor(string targetKey) {
-            this->targetKey = targetKey;
-            theKeyIsFound = false;
-        }
-
-        bool found(){ return theKeyIsFound; }
-
-        void visit(NodeField<string,TreeNode<string>*>* field){
-            if(!found())
-                theKeyIsFound = (targetKey == field->key());
-        }
-
-        bool endTreeVisit(){
-            return found();
-        }
-
-
-    };
-
-    class RiddleTreeNodeExtractKeyVisitor : TreeNodeVisitor<NodeField<string,TreeNode<string>*>*> {
-    private:
-        vector<string>* theTreeNodes;
-
-    public:
-        RiddleTreeNodeExtractKeyVisitor() {
-            theTreeNodes = new vector<string>();
-        }
-
-        void visit(NodeField<string,TreeNode<string>*>* field){
-            theTreeNodes->push_back(field->key());
-        }
-
-        bool endTreeVisit(){
-            return false;
-        }
-
-        vector<string>& treeNodes(){ return *theTreeNodes; }
-    };
 }
 
 #endif //_RIDDLE_TREE_
