@@ -182,6 +182,24 @@ namespace ecc {
             /* ASSERT */
             EXPECT_EQ("A, B, C, D", toString(treeNode_fixture->keys()));
         }
+
+        TEST_F(TreeNodeTests, TreeNode_Split_IntoTwoNodes_Successfully){
+            treeNode_fixture = new TreeNode<string>(4);
+            treeNode_fixture->insert("C",NULL);
+            treeNode_fixture->insert("D",NULL);
+            treeNode_fixture->insert("A",NULL);
+            treeNode_fixture->insert("B",NULL);
+            TreeNode<string>* anotherNode = new TreeNode<string>(4);
+
+            /* Act */
+            bool splitDone = treeNode_fixture->split(*anotherNode);
+
+            /* ASSERT */
+            EXPECT_EQ(true, splitDone);
+            EXPECT_EQ("A, B", toString(treeNode_fixture->keys()));
+            EXPECT_EQ("C, D", toString(anotherNode->keys()));
+        }
+
         /******************************************************/
         /*   Test Cases Class for RiddleTree Functions        */
         /******************************************************/

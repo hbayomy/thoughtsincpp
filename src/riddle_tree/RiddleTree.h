@@ -206,7 +206,7 @@ namespace ecc {
             bool split = false;
             if(numberOfInsertedKeys() == maxNumberOfAllowedKeys()){
                 int offset = numberOfInsertedKeys() / 2;
-                newNode.tuple = split_hi(tuple->begin()+offset,tuple->end());
+                newNode.tuple->assign(tuple->begin()+offset,tuple->end());
                 tuple->erase(tuple->begin()+offset,tuple->end());
                 split = true;
             }
