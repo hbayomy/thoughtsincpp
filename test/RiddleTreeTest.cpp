@@ -13,7 +13,7 @@ namespace ecc {
         /*   Test Cases Class for TreeNode Functions                */
         /************************************************************/
 
-        TEST_F(TreeNodeTests, TreeNode_InsertKey_EmptyNode_Successfully){
+        TEST_F(TreeNodeTests, InsertKey_EmptyNode_Successfully){
             /* No Arrange */
 
             /* Act */
@@ -23,7 +23,7 @@ namespace ecc {
             EXPECT_EQ(1,treeNode_fixture->numberOfInsertedKeys());
         }
 
-        TEST_F(TreeNodeTests, TreeNode_InsertKey_NodeWithOneKey_Successfully){
+        TEST_F(TreeNodeTests, InsertKey_NodeWithOneKey_Successfully){
             /* Arrange */
             treeNode_fixture->insert("A",NULL);
 
@@ -34,7 +34,7 @@ namespace ecc {
             EXPECT_EQ(2,treeNode_fixture->numberOfInsertedKeys());
         }
 
-        TEST_F(TreeNodeTests, TreeNode_InsertKey_ChaneDefaultMaxNumberOfKeys_Successfully){
+        TEST_F(TreeNodeTests, InsertKey_ChaneDefaultMaxNumberOfKeys_Successfully){
             /* Arrange */
             treeNode_fixture = new TreeNode<string>(3);
             treeNode_fixture->insert("C",NULL);
@@ -48,7 +48,7 @@ namespace ecc {
             EXPECT_EQ(3,treeNode_fixture->numberOfInsertedKeys());
         }
 
-	    TEST_F(TreeNodeTests, TreeNode_InsertKey_ExceedNumberOfMaxKeys){
+	    TEST_F(TreeNodeTests, InsertKey_ExceedNumberOfMaxKeys){
 	        /* Arrange */
             treeNode_fixture->insert("A",NULL);
             treeNode_fixture->insert("B",NULL);
@@ -129,7 +129,7 @@ namespace ecc {
             EXPECT_EQ(string("B"),max_key);
         }
 
-        TEST_F(TreeNodeTests, TreeNode_RemoveKey_Successfully){
+        TEST_F(TreeNodeTests, RemoveKey_Successfully){
             /* Arrange */
             treeNode_fixture->insert("A",NULL);
             treeNode_fixture->insert("B",NULL);
@@ -142,7 +142,7 @@ namespace ecc {
             EXPECT_EQ(true, removed);
         }
 
-        TEST_F(TreeNodeTests, TreeNode_RemoveKey_DoesNotExist){
+        TEST_F(TreeNodeTests, RemoveKey_DoesNotExist){
             /* Arrange */
             treeNode_fixture->insert("A",NULL);
             treeNode_fixture->insert("B",NULL);
@@ -155,7 +155,7 @@ namespace ecc {
             EXPECT_EQ(false, removed);
         }
 
-        TEST_F(TreeNodeTests, TreeNode_Merge_Two_Nodes_ThatWillExceeds_MaxAllowedKeys){
+        TEST_F(TreeNodeTests, Merge_Two_Nodes_ThatWillExceeds_MaxAllowedKeys){
             /* Arrange */
             treeNode_fixture->insert("C",NULL);
             treeNode_fixture->insert("D",NULL);
@@ -167,7 +167,7 @@ namespace ecc {
             EXPECT_ANY_THROW(treeNode_fixture->merge(*anotherNode));
         }
 
-        TEST_F(TreeNodeTests, TreeNode_Merge_Two_Nodes_Successfully){
+        TEST_F(TreeNodeTests, Merge_Two_Nodes_Successfully){
             /* Arrange */
             treeNode_fixture = new TreeNode<string>(4);
             treeNode_fixture->insert("C",NULL);
@@ -183,7 +183,7 @@ namespace ecc {
             EXPECT_EQ("A, B, C, D", toString(treeNode_fixture->keys()));
         }
 
-        TEST_F(TreeNodeTests, TreeNode_Split_IntoTwoNodes_Successfully){
+        TEST_F(TreeNodeTests, Split_IntoTwoNodes_Successfully){
             treeNode_fixture = new TreeNode<string>(4);
             treeNode_fixture->insert("C",NULL);
             treeNode_fixture->insert("D",NULL);
