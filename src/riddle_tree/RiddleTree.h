@@ -178,18 +178,17 @@ namespace ecc {
 
 		int maxNumberOfAllowedKeys(){ return maxNumOfKeys; }
 
-		int maxKeyIndex(){
-            return distance(
-                    tuple->begin(),
-                    max_element(tuple->begin(),tuple->end())
-                    );
-		}
+        TreeNode<Key>* nodeOfMaxKey() { return tuple->at( tuple->size() - 1).node(); }
 
-        TreeNode<Key>* nodeOfMaxKey() { return tuple->at(maxKeyIndex()).node(); }
+        TreeNode<Key>* nodeOfMinKey() { return tuple->at(0).node(); }
 
 		string maxKey(){
-            return tuple->at(maxKeyIndex()).key();
+            return tuple->at( tuple->size() - 1).key();
 		}
+
+        string minKey(){
+            return tuple->at(0).key();
+        }
 
         bool remove(string key) {
             int foundIndex = findFieldIndexByKey(key);
