@@ -242,7 +242,7 @@ namespace ecc {
 
         TreeNode<string>* treeRoot;
         int nodeCount;
-        int maxAllowedKeys;
+        int maxAllowedKeysPerNode;
 
         void visitNodeField(TreeNode<string>* node, function<bool(NodeField<string,TreeNode<string>*>*)> visit);
         void visitNode(TreeNode<string>* node, function<void(TreeNode<string>*)> visit);
@@ -252,8 +252,8 @@ namespace ecc {
         void root(StringTreeNode* newRoot) { treeRoot = newRoot; }
         void moveFieldOfMaxKey(TreeNode <string> *fromNode, TreeNode <string> *toNode);
 	public:
-		RiddleTree() {  treeRoot = new TreeNode<string>(); nodeCount = 1; maxAllowedKeys = 2; }
-        RiddleTree(int maxKeys) {  treeRoot = new TreeNode<string>(maxKeys); nodeCount = 1; maxAllowedKeys = maxKeys; }
+		RiddleTree() {  treeRoot = new TreeNode<string>(); nodeCount = 1; maxAllowedKeysPerNode = 2; }
+        RiddleTree(int maxKeysPerNode) {  treeRoot = new TreeNode<string>(maxKeysPerNode); nodeCount = 1; maxAllowedKeysPerNode = maxKeysPerNode; }
 		~RiddleTree() { delete treeRoot; }
 
 		void insert(string data);

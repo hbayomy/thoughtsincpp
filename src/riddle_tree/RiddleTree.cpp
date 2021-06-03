@@ -10,7 +10,7 @@ namespace ecc {
 	/******************************************************/
 
 	int RiddleTree::treeDepth() {
-        return numberOfNodes()/maxAllowedKeys;
+        return numberOfNodes()/maxAllowedKeysPerNode;
 	}
 
     bool RiddleTree::search(string targetKey) {
@@ -32,7 +32,7 @@ namespace ecc {
 		    root()->insert(key,NULL);
 		}else{
 		    if(key > root()->maxKey()){
-                TreeNode<string>* newNode = new TreeNode<string>(maxAllowedKeys);
+                TreeNode<string>* newNode = new TreeNode<string>(maxAllowedKeysPerNode);
                 newNode->insert(key,root());
                 root(newNode);
 		    }
