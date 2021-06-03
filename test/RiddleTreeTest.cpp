@@ -105,18 +105,6 @@ namespace ecc {
             EXPECT_EQ(-1,keyIndex);
         }
 
-        TEST_F(TreeNodeTests, Find_MaxKeyIndex_InTreeNode){
-            /* Arrange */
-            treeNode_fixture->insert("A",NULL);
-            treeNode_fixture->insert("B",NULL);
-
-            /* Act */
-            int max_keyIndex = treeNode_fixture->maxKeyIndex();
-
-            /* ASSERT */                    /* Act */
-            EXPECT_EQ(1,max_keyIndex);
-        }
-
         TEST_F(TreeNodeTests, Find_MaxKey_InTreeNode){
             /* Arrange */
             treeNode_fixture->insert("A",NULL);
